@@ -7,4 +7,4 @@ Route::get('/', function () {
 });
 
 use App\Http\Controllers\FotoController;
-Route::resource("/foto", [FotoController::class, "index"]);
+Route::resource("/foto", FotoController::class);
