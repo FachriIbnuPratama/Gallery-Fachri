@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId("album_id")->references("id")->on("master.albums")->onDelete("CASCADE")->onUpdate("CASCADE");
             $table->timestamps();
         });
-    }
+    }   
 
     /**
      * Reverse the migrations.
