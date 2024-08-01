@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Album extends Model
 {
     use HasFactory;
+
+
+    public $table = "master.album";
+
+    protected $fillable = [
+        "id",
+        "nama_album",
+        "deskripsi",
+        "tanggal_dibuat"
+    ];
 }
