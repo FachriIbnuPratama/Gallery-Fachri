@@ -11,7 +11,13 @@ class FotoController extends Controller
      */
     public function index()
     {
-        //
+        $fotos = Foto::all();
+
+        $data = [
+            "fotos" => $fotos
+        ];
+
+        return view("foto.index", $data);
     }
 
     /**
