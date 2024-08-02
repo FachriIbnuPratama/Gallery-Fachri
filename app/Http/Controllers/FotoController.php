@@ -17,7 +17,7 @@ class FotoController extends Controller
             "fotos" => $fotos
         ];
 
-        return view("foto.index", $data);
+        return view("master.foto", $data);
     }
 
     /**
