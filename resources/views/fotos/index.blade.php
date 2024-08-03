@@ -1,6 +1,7 @@
 @extends('layout')
 
 @section('content')
+<center>
 <h1>Foto</h1>
     <a href="{{ route('foto.create') }}" class="tambah-button">+ Tambah</a>
     <br>
@@ -19,20 +20,20 @@
         </thead>
         <tbody>
             @php
-                $no = 1
+                $no = 1;
             @endphp
-            @forelse($fotos as $foto)
+            @forelse($foto as $f)
                 <tr>
                     <td>{{ $no++ }}</td>
-                    <td>{{ $foto->album->nama_album }}</td>
-                    <td>{{ $foto->judul }}</td>
-                    <td>{{ $foto->deskripsi }}</td>
-                    <td>{{ date("d-m-Y", strtotime($foto->tanggal_unggah)) }}</td>
-                    <td><img src="{{ asset("storage/{$foto->lokasi_file}") }}" alt="{{ $foto->judul }}" width="40%"</td>
+                    <td>{{ $f->album->nama_album }}</td>
+                    <td>{{ $f->judul }}</td>
+                    <td>{{ $f->deskripsi }}</td>
+                    <td>{{ date("d-m-Y", strtotime($f->tanggal_unggah)) }}</td>
+                    <td><img src="{{ asset("storage/{$f->lokasi_file}") }}" alt="{{ $f->judul }}" width="40%"</td>
                     <td>
-                        <a href="{{ url('/foto/' . $foto->id) }}" class="edit-button">Edit</a>
+                        <a href="{{ route('foto.edit', $f->id) }}" class="edit-button">Edit</a>
                         ||
-                        <form action="{{ url('/foto/' . $foto->id) }}" method="POST">
+                        <form action="{{ route('foto.destroy', $f->id) }}" method="POST">
                             @method('delete')
                             @csrf
                             <button type="submit">Delete</button>
@@ -46,6 +47,7 @@
             @endforelse
         </tbody>
     </table>
+</center>
 @endsection
 
  

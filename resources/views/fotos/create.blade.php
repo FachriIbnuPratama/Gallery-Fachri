@@ -1,16 +1,16 @@
 @extends('layout')
 
 @section('content')
-    <h1>Tambah Hewan</h1>
-        <center>
-        <a href="{{ route('Fonzz.index') }}" >Kembali ke Tampilan utama</a>
-            <form action="{{ route('foto.store') }}" method="post" enctype="multipart/form-date">
+<center>
+    <h1>Tambah Foto</h1>
+        <a href="{{ route('foto.index') }}" >Kembali ke Tampilan utama</a>
+            <form action="{{ route('foto.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div>
                 <label for="album">Album</label>
                 <select name="album" id="album" required="required">
                     <option value="">Pilih Album</option>
-                    @foreacth($albums as $album)
+                    @foreach($albums as $album)
                         <option value="{{ $album->id }}">{{ $album->nama_album}}</option>
                     @endforeach
                 </select>

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('master.fotos', function(Blueprint $table) {
             $table->id();
             $table->string("judul");
-            $table->text("deskripsi_foto")->nullable();
+            $table->text("deskripsi")->nullable();
             $table->date("tanggal_unggah");
             $table->string("lokasi_file");
             $table->foreignId("album_id")->references("id")->on("master.albums")->onDelete("CASCADE")->onUpdate("CASCADE");

@@ -7,16 +7,16 @@ use App\Models\Foto;
 use App\Models\Album;
 use Illuminate\Support\Facades\Storage;
 
-class FotoController extends Controller
+class AlbumController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $fotos = Foto::all();
+        $albums = Album::all();
 
-        return view("fotos.index", compact("fotos"));
+        return view("albums.index", compact("albums"));
     }
 
     /**
@@ -26,39 +26,26 @@ class FotoController extends Controller
     {
         $albums = Album::all();
 
-        return view("fotos.create")->with("albums", $albums);
+        return view("albums.create");
     }
-
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
         $album      = $request->album;
-        $judul      = $request->judul;
         $deskripsi  = $request->deskripsi;
 
-        $insertFoto                 = new Foto();
-        $insertFoto->album_id       = $album;
-        $insertFoto->judul          = $judul;
-        $insertFoto->tanggal_unggah = date("Y-m-d");
+        $insertAlbum                 = new Album();
+        $insertAlbum->id             = $album;
+        $insertAlbum->tanggal_dibuat = date("Y-m-d");
 
         if (!empty($deskripsi)) {
-            $insertFoto->deskripsi = $deskripsi;
+            $insertAlbum->deskripsi = $deskripsi;
         }
+        $insertAlbum->save();
 
-        if ($request->hasFile("foto"))
-        {
-            
-            $foto = $request->file("foto");
-            $namaFotoBaru = date("Y_m_d_H_i_s") .".". $foto->getClientOriginalExtension();
-
-            $foto->storeAs("/foto", $namaFotoBaru, "public");
-            $insertFoto->lokasi_file = "foto/{$namaFotoBaru}";
-        }
-        $insertFoto->save();
-
-        return redirect()->route("foto.index");
+        return redirect()->route("album.index");
     }
 
     /**
@@ -124,22 +111,17 @@ class FotoController extends Controller
      * Remove the specified resource from storage.
      */
     private function deleteFileFoto(string $id){
-        $foto = Foto::where("id", $id)->first();
-
-        if (storage::disk("public")->exists($foto->lokasi_file))
-        {
-            storage::disk("public")->delete($foto->lokasi_file);
-        }
+        $album = Album::where("id", $id)->first();
     }
 
     public function destroy(string $id)
     {
-        $foto = Foto::where("id", $id)->first();
+        $album = Album::where("id", $id)->first();
 
         $this->deleteFileFoto($id);
 
-        $foto->delete();
+        $album->delete();
 
-        return redirect()->route("foto.index");
+        return redirect()->route("album.index");
     }
 }
