@@ -21,7 +21,7 @@ class Foto extends Model
         "album_id",
     ];
 
-    public function albums(): BelongsTo
+    public function album(): BelongsTo
 {
     return $this->belongsTo(Album::class, "album_id", "id");
 }

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Foto;
 use App\Models\Album;
 use Illuminate\Support\Facades\Storage;
 
@@ -34,10 +33,11 @@ class AlbumController extends Controller
     public function store(Request $request)
     {
         $album      = $request->album;
+        $nama_album = $request->nama_album;
         $deskripsi  = $request->deskripsi;
 
         $insertAlbum                 = new Album();
-        $insertAlbum->id             = $album;
+        $insertAlbum->nama_album     = $nama_album;   
         $insertAlbum->tanggal_dibuat = date("Y-m-d");
 
         if (!empty($deskripsi)) {
@@ -61,16 +61,13 @@ class AlbumController extends Controller
      */
     public function edit(string $id)
     {
-        $albums = Album::all();
-
-        $foto = Foto::where("id", "=", $id)->first();
+        $album = Album::where("id", $id)->first();
 
         $data = [
-            "albums" => $albums,
-            "foto" => $foto,
+            "album" => $album,
         ];
 
-        return view("fotos.edit", $data);
+        return view("albums.edit", $data);
     }
 
     /**
@@ -78,33 +75,19 @@ class AlbumController extends Controller
      */
     public function update(Request $request, string $id)
     { 
-        $album      = $request->album;
-        $judul      = $request->judul;
-        $deskripsi  = $request->deskripsi;
+        $nama_album     = $request->nama_album;
+        $deskripsi      = $request->deskripsi;
+        $tanggal_dibuat = $request->tanggal_dibuat;
     
-        $updateFoto                 =  [
-            "album_id"        => $album,
-            "judul"           => $judul,
+        $updateAlbum                 =  [
+            "nama_album"              => $nama_album,
+            "deskripsi"               => $deskripsi,
+            "tanggal_dibuat"          => $tanggal_dibuat,
         ];
 
-        if (!empty($deskripsi)) {
-            $updateFoto["deskripsi"] = $deskripsi;
-        }
+        Album::where("id","=", $id)->update($updateAlbum);
     
-        if ($request->hasFile("foto"))
-        {
-            $foto = $request->file("foto");
-            if ($foto->isValid()) {
-                $this->deleteFileFoto($id);
-                $namaFotoBaru = date("Y_m_d_H_i_s") .".". $foto->getClientOriginalExtension();
-                $foto->storeAs("/foto", $namaFotoBaru, "public");
-                $updateFoto["lokasi_file"]="foto/{$namaFotoBaru}";
-            }
-        }
-
-        Foto::where("id", "=", $id)->update($updateFoto);
-    
-        return redirect()->route('foto.index')->with('success', 'Foto berhasil diperbarui');
+        return redirect()->route('album.index');
     }
 
     /**

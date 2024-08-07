@@ -20,7 +20,7 @@ class Album extends Model
         "tanggal_dibuat"
     ];
 
-    public function fotos(): HasMany {
+    public function foto(): HasMany {
         return $this->hasMany(Foto::class, "album_id", "id");
     }
 }

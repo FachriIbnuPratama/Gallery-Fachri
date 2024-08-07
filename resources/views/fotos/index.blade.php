@@ -7,46 +7,38 @@
     <br>
     <br>
     <table border="4">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Nama Album</th>
-                <th>Judul</th>
-                <th>Deskripsi</th>
-                <th>Tanggal Unggah</th>
-                <th>Lokasi File</th>
-                <th>Opsi</th>
-            </tr>
-        </thead>
-        <tbody>
-            @php
-                $no = 1;
-            @endphp
-            @forelse($foto as $f)
-                <tr>
-                    <td>{{ $no++ }}</td>
-                    <td>{{ $f->album->nama_album }}</td>
-                    <td>{{ $f->judul }}</td>
-                    <td>{{ $f->deskripsi }}</td>
-                    <td>{{ date("d-m-Y", strtotime($f->tanggal_unggah)) }}</td>
-                    <td><img src="{{ asset("storage/{$f->lokasi_file}") }}" alt="{{ $f->judul }}" width="40%"</td>
-                    <td>
-                        <a href="{{ route('foto.edit', $f->id) }}" class="edit-button">Edit</a>
-                        ||
-                        <form action="{{ route('foto.destroy', $f->id) }}" method="POST">
-                            @method('delete')
-                            @csrf
-                            <button type="submit">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="6">Tidak terdapat data foto!</td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>Album</th>
+            <th>Judul</th>
+            <th>Deskripsi Foto</th>
+            <th>Tanggal diUnggah</th>
+            <th>Foto</th>
+            <th>Opsi</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($fotos as $foto)
+        <tr>
+            <td>{{ $foto->no++ }}</td>
+            <td>{{ $foto->album->nama_album }}</td>
+            <td>{{ $foto->judul }}</td>
+            <td>{{ $foto->deskripsi }}</td>
+            <td>{{ $foto->tanggal_unggah }}</td>
+            <td><img src="{{ asset("storage/{$foto->lokasi_file}") }}" alt="{{ $foto->judul }}" width="100" /></td>
+            <td>
+                <a href="{{ route('foto.edit', $foto->id) }}">Edit</a>
+                <form action="{{ route('foto.destroy', $foto->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
 </center>
 @endsection
 

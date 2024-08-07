@@ -2,7 +2,7 @@
 
 @section('content')
 <center>
-<h1>Album</h1>
+<h1>Data Album</h1>
     <a href="{{ route('album.create') }}" class="tambah-button">+ Tambah</a>
     <br>
     <br>
@@ -20,10 +20,10 @@
             @php
                 $no = 1
             @endphp
-            @forelse($album as $a)
+            @forelse($albums as $a)
                 <tr>
                     <td>{{ $no++ }}</td>
-                    <td>{{ $a->nama }}</td>
+                    <td>{{ $a->nama_album }}</td>
                     <td>{{ $a->deskripsi }}</td>
                     <td>{{ date("d-m-Y", strtotime($a->tanggal_dibuat)) }}</td>
                     <td>

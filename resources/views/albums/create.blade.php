@@ -8,7 +8,7 @@
             @csrf
             <div>
                 <label for="nama">Nama Album</label>
-                <input type="text" name="nama" id="nama" placeholder="Nama Album" required>
+                <input type="text" name="nama" id="nama_album" placeholder="Nama Album" required>
             </div>
             <div>
                 <label for="deskripsi">Deskripsi</label>
